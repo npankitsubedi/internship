@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: vit-internship-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: vit_internship_approval
+      POSTGRES_USER: vit_user
+      POSTGRES_PASSWORD: vit_password
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vit_user -d vit_internship_approval"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./database/schema_and_mock_data.sql:/docker-entrypoint-initdb.d/01-schema_and_mock_data.sql:ro
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: vit-internship-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/vit_internship_approval
+      SPRING_DATASOURCE_USERNAME: vit_user
+      SPRING_DATASOURCE_PASSWORD: vit_password
+      ALLOWED_ORIGINS: "*"
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres-data:
