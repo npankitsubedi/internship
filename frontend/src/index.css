@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color: #0f172a;
+  background-color: #f8f4ea;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: 'Space Grotesk', sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(197, 127, 24, 0.12), transparent 22%),
+    radial-gradient(circle at top right, rgba(11, 114, 133, 0.12), transparent 24%),
+    #f8f4ea;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  font: inherit;
+}
+
+.glass-panel {
+  @apply rounded-[2rem] border border-white/70 bg-white/85 shadow-halo backdrop-blur;
+}
+
+.field-label {
+  @apply mb-2 block text-sm font-medium text-ink/80;
+}
+
+.field-input {
+  @apply w-full rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-sea focus:ring-2 focus:ring-sea/20;
+}
